@@ -12,9 +12,9 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: 'default'
-    syncPolicy:
-      automated:
-        prune: true  # In case of removal of resources from Git, ArgoCD will apply the changes from the current state of the Git repo
-        selfHeal: true # In case of manual kubectl operations against the state of the cluster, ArgoCD will apply the changes from Git
+  syncPolicy:
+    automated:
+      prune: true  # In case of removal of resources from Git, ArgoCD will apply the changes from the current state of the Git repo
+      selfHeal: true # In case of manual kubectl operations against the state of the cluster, ArgoCD will apply the changes from Git
     syncOptions:
       - CreateNamespace=true
