@@ -1,0 +1,22 @@
+#### Managing Argo with Argo (App of Apps concept) using ArgoCD Application definition ####
+# argo-cd application to manage argo-cd itself and also the applicationset for other helm charts
+# https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/#manage-argo-cd-using-argo-cd
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argo-cd
+spec:
+  project: default
+  sources:
+    - repoURL: https://github.com/MaryamTavakkoli/argocd-demo.git
+      targetRevision: main
+      path: . 
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - Prune=false

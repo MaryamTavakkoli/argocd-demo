@@ -1,0 +1,26 @@
+
+#### ArgoCD Helm Chart values ####
+# Argo-CD Helm chart values COULD be changed according to the env/cluster
+# The Ingress host name HAS TO be changed according to the env/cluster
+server:
+  replicas: 3
+  # ingress:
+  #     enabled: true
+  #     annotations:
+  #       cert-manager.io/cluster-issuer: letsencrypt-production
+  #       ingress.kubernetes.io/force-ssl-redirect: "true"
+  #       nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+  #     ingressClassName: "nginx" # To be changed according to the Ingress class used in the cluster
+  #     hosts:
+  #       - argocd.somehost.com # To be changed according to the cluster
+  #     paths:
+  #       - /
+  #     pathType: Prefix
+  #     tls:
+  #       - secretName: argocd-tls-certificate
+  #         hosts:
+  #           - argocd.somehost.com # To be changed according to the cluster
+  config:
+    # https://argo-cd.readthedocs.io/en/stable/operator-manual/user-management/
+    kustomize.buildOptions: --enable-helm
+    timeout.reconcilation: 10s
