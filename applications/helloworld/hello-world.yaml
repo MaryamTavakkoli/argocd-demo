@@ -51,10 +51,7 @@ metadata:
     app: hello-world
 spec:
   ports:
-    - name: http
-      port: 80
-      protocol: TCP
-      targetPort: 80
+    - port: 5678
   type: LoadBalancer
   selector:
     app: hello-world
