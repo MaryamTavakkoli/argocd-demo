@@ -1,26 +1,20 @@
-# ApplicationSet to deploy ALL additional resources for each cluster
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: applications
+  name: demo-app
   namespace: argocd
 spec:
   project: default
-  template:
-    metadata:
-      name: 'applications' 
-    spec:
-      project: default
-      source:
-        repoURL: https://github.com/MaryamTavakkoli/argocd-demo.git
-        targetRevision: main
-        path: 'applications/*' 
-      destination:
-        server: https://kubernetes.default.svc
-        namespace: 'default'
-      syncPolicy:
-        automated:
-          prune: true  # In case of removal of resources from Git, ArgoCD will apply the changes from the current state of the Git repo
-          selfHeal: true # In case of manual kubectl operations against the state of the cluster, ArgoCD will apply the changes from Git
-        syncOptions:
-        - CreateNamespace=true
+  source:
+    repoURL: https://github.com/MaryamTavakkoli/argocd-demo.git
+    targetRevision: main
+    path: 'applications/*' 
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: 'default'
+    syncPolicy:
+      automated:
+        prune: true  # In case of removal of resources from Git, ArgoCD will apply the changes from the current state of the Git repo
+        selfHeal: true # In case of manual kubectl operations against the state of the cluster, ArgoCD will apply the changes from Git
+    syncOptions:
+      - CreateNamespace=true
