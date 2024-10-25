@@ -1,16 +1,10 @@
 # ApplicationSet to deploy ALL additional resources for each cluster
 apiVersion: argoproj.io/v1alpha1
-kind: ApplicationSet
+kind: Application
 metadata:
   name: applications
   namespace: argocd
 spec:
-  goTemplate: true
-  generators:
-    - clusters:
-        selector:
-          matchLabels:
-            argocd.argoproj.io/secret-type: clusters
   template:
     metadata:
       name: 'applications' 
@@ -19,10 +13,10 @@ spec:
       source:
         repoURL: https://github.com/MaryamTavakkoli/argocd-demo.git
         targetRevision: main
-        path: applications 
+        path: 'applications/*' 
       destination:
         server: https://kubernetes.default.svc
-        namespace: 'hello-kubernetes'
+        namespace: 'default'
       syncPolicy:
         automated:
           prune: true  # In case of removal of resources from Git, ArgoCD will apply the changes from the current state of the Git repo
