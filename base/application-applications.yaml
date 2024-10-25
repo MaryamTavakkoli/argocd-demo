@@ -5,6 +5,7 @@ metadata:
   name: applications
   namespace: argocd
 spec:
+  project: default
   template:
     metadata:
       name: 'applications' 

@@ -11,4 +11,4 @@ helmCharts:
 resources:
 - base/namespace.yaml                        # ArgoCD Namespace
 - base/application-argocd.yaml               # Managing Argo with Argo (App of Apps concept) using ArgoCD Application definition
-- base/git-generator-applications.yaml       # GitOps Generator ApplicationSet for managing applications
+- base/application-applications.yaml       # GitOps Generator ApplicationSet for managing applications
