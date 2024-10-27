@@ -1,59 +1,58 @@
-# apiVersion: argoproj.io/v1alpha1
-# kind: ApplicationSet
-# metadata:
-#   name: demo-appset
-#   namespace: argocd
-# spec:
-#   #goTemplate: true
-#   generators:
-#   - git:
-#       repoURL: https://github.com/RELEX-Solutions/demo-argo.git
-#       revision: main                           
-#       directories:
-#       - path: applications/*
-#   template:
-#     metadata:
-#       name: 'demo-app-{{path}}' 
-#     spec:
-#       project: default
-#       source:
-#         repoURL: https://github.com/RELEX-Solutions/demo-argo.git
-#         targetRevision: main
-#         path: '{{path}}'
-#       destination:
-#         server: https://kubernetes.default.svc
-#         namespace: 'default'
-#       syncPolicy:
-#         automated:
-#           prune: true  # In case of removal of resources from Git, ArgoCD will apply the changes from the current state of the Git repo
-#           selfHeal: true # In case of manual kubectl operations against the state of the cluster, ArgoCD will apply the changes from Git
-#         syncOptions:
-#           - CreateNamespace=true
----
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: cluster-addons
+  name: demo-appset
   namespace: argocd
 spec:
   generators:
   - git:
-      repoURL: https://github.com/argoproj/argo-cd.git
-      revision: HEAD
+      repoURL: https://github.com/RELEX-Solutions/demo-argo.git
+      revision: main                           
       directories:
-      - path: applicationset/examples/git-generator-directory/cluster-addons/*
+      - path: applications/*
   template:
     metadata:
       name: '{{path.basename}}'
     spec:
-      project: "default"
+      project: default
       source:
-        repoURL: https://github.com/argoproj/argo-cd.git
-        targetRevision: HEAD
+        repoURL: https://github.com/RELEX-Solutions/demo-argo.git
+        targetRevision: main
         path: '{{path}}'
       destination:
         server: https://kubernetes.default.svc
         namespace: '{{path.basename}}'
       syncPolicy:
+        automated:
+          prune: true  # In case of removal of resources from Git, ArgoCD will apply the changes from the current state of the Git repo
+          selfHeal: true # In case of manual kubectl operations against the state of the cluster, ArgoCD will apply the changes from Git
         syncOptions:
-        - CreateNamespace=true
+          - CreateNamespace=true
+---
+# apiVersion: argoproj.io/v1alpha1
+# kind: ApplicationSet
+# metadata:
+#   name: cluster-addons
+#   namespace: argocd
+# spec:
+#   generators:
+#   - git:
+#       repoURL: https://github.com/argoproj/argo-cd.git
+#       revision: HEAD
+#       directories:
+#       - path: applicationset/examples/git-generator-directory/cluster-addons/*
+#   template:
+#     metadata:
+#       name: '{{path.basename}}'
+#     spec:
+#       project: "default"
+#       source:
+#         repoURL: https://github.com/argoproj/argo-cd.git
+#         targetRevision: HEAD
+#         path: '{{path}}'
+#       destination:
+#         server: https://kubernetes.default.svc
+#         namespace: '{{path.basename}}'
+#       syncPolicy:
+#         syncOptions:
+#         - CreateNamespace=true
