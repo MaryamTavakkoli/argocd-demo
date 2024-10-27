@@ -5,19 +5,23 @@ metadata:
 spec:
   goTemplate: true
   generators:
-  - clusters: {}
+    - git:
+        repoURL: https://github.com/RELEX-Solutions/demo-argo.git
+        revision: main                           
+        directories:
+        - path: applications/*
   template:
     metadata:
-      name: 'applications-{{.path.path}}' 
+      name: '{{.path.basename}}' 
     spec:
       project: default
       source:
         repoURL: https://github.com/RELEX-Solutions/demo-argo.git
         targetRevision: main
-        path: 'applications/*'
+        path: '{{.path.path}}'
       destination:
         server: https://kubernetes.default.svc
-        namespace: '{{.path.path}}'
+        namespace: '{{.path.basename}}'
       syncPolicy:
         automated:
           prune: true  # In case of removal of resources from Git, ArgoCD will apply the changes from the current state of the Git repo
