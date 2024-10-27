@@ -8,7 +8,7 @@ spec:
   - clusters: {}
   template:
     metadata:
-      name: 'applications-{{.path}}' 
+      name: 'applications-{{.path.path}}' 
     spec:
       project: default
       source:
@@ -17,7 +17,7 @@ spec:
         path: applications/*
       destination:
         server: https://kubernetes.default.svc
-        namespace: '{{.path}}'
+        namespace: '{{.path.path}}'
       syncPolicy:
         automated:
           prune: true  # In case of removal of resources from Git, ArgoCD will apply the changes from the current state of the Git repo
