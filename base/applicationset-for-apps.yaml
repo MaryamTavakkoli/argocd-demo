@@ -38,18 +38,18 @@ metadata:
 spec:
   generators:
   - git:
-      repoURL: https://github.com/RELEX-Solutions/demo-argo.git
-      revision: main
+      repoURL: https://github.com/argoproj/argo-cd.git
+      revision: HEAD
       directories:
-      - path: applications/*
+      - path: applicationset/examples/git-generator-directory/cluster-addons/*
   template:
     metadata:
       name: '{{path.basename}}'
     spec:
       project: "default"
       source:
-        repoURL: https://github.com/RELEX-Solutions/demo-argo.git
-        targetRevision: main
+        repoURL: https://github.com/argoproj/argo-cd.git
+        targetRevision: HEAD
         path: '{{path}}'
       destination:
         server: https://kubernetes.default.svc
