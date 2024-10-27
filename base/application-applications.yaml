@@ -10,7 +10,7 @@ spec:
     metadata:
       name: 'applications-{{.path}}' 
     spec:
-      project: my-project
+      project: default
       source:
         repoURL: https://github.com/RELEX-Solutions/demo-argo.git
         targetRevision: main
