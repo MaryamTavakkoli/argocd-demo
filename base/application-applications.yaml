@@ -10,7 +10,7 @@ spec:
       repoURL: https://github.com/RELEX-Solutions/demo-argo.git
       revision: main                           
       directories:
-      - path: applications/helloworld
+      - path: hello-world
   template:
     metadata:
       name: 'demo-app-{{path}}' 
