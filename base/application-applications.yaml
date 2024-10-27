@@ -1,28 +1,27 @@
-# ApplicationSet to deploy ALL additional resources for each cluster
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: demo-applications
-  namespace: argocd
+  name: guestbook
 spec:
+  goTemplate: true
   template:
     metadata:
-      name: 'applications-{{.path}}' # {{name}} comes from the name specified for cluster in secret 
+      name: 'applications-{{.path}}' 
     spec:
-      project: 'default
+      project: my-project
       source:
         repoURL: https://github.com/RELEX-Solutions/demo-argo.git
         targetRevision: main
-        path: 'applications/*' # platform-mary-argo-cp should be replaced
+        path: applications-{{.path}}
       destination:
-        server: 'https://kubernetes.default.svc'
+        server: https://kubernetes.default.svc
         namespace: '{{.path}}'
       syncPolicy:
         automated:
           prune: true  # In case of removal of resources from Git, ArgoCD will apply the changes from the current state of the Git repo
           selfHeal: true # In case of manual kubectl operations against the state of the cluster, ArgoCD will apply the changes from Git
         syncOptions:
-        - CreateNamespace=true
+          - CreateNamespace=true
 # ---
 # apiVersion: argoproj.io/v1alpha1
 # kind: Application
