@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: demo
+  namespace: argocd
+spec:
+  #goTemplate: true
+  generators:
+  - git:
+      repoURL: https://github.com/RELEX-Solutions/demo-argo.git
+      revision: main                           
+      directories:
+      - path: helm-charts/*
+  template:
+    metadata:
+      name: 'demo-chart-{{path}}' 
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/RELEX-Solutions/demo-argo.git
+        targetRevision: main
+        path: '{{path}}'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: 'default'
+      syncPolicy:
+        automated:
+          prune: true  # In case of removal of resources from Git, ArgoCD will apply the changes from the current state of the Git repo
+          selfHeal: true # In case of manual kubectl operations against the state of the cluster, ArgoCD will apply the changes from Git
+        syncOptions:
+          - CreateNamespace=true
