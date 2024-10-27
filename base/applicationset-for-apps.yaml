@@ -1,10 +1,10 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: demo
+  name: demo-appset
   namespace: argocd
 spec:
-  #goTemplate: true
+  goTemplate: true
   generators:
   - git:
       repoURL: https://github.com/RELEX-Solutions/demo-argo.git
@@ -13,13 +13,13 @@ spec:
       - path: helm-charts/*
   template:
     metadata:
-      name: 'demo-chart-{{path}}' 
+      name: 'demo-chart-{{.path.path}}' 
     spec:
       project: default
       source:
         repoURL: https://github.com/RELEX-Solutions/demo-argo.git
         targetRevision: main
-        path: '{{path}}'
+        path: '{{.path.path}}'
       destination:
         server: https://kubernetes.default.svc
         namespace: 'default'
