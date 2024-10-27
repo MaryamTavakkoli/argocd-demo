@@ -1,20 +1,46 @@
+# ApplicationSet to deploy ALL additional resources for each cluster
 apiVersion: argoproj.io/v1alpha1
-kind: Application
+kind: ApplicationSet
 metadata:
-  name: demo-app
+  name: demo-applications
   namespace: argocd
 spec:
-  project: default
-  source:
-    repoURL: https://github.com/MaryamTavakkoli/argocd-demo.git
-    targetRevision: main
-    path: 'applications' 
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: 'default'
-  syncPolicy:
-    automated:
-      prune: true  # In case of removal of resources from Git, ArgoCD will apply the changes from the current state of the Git repo
-      selfHeal: true # In case of manual kubectl operations against the state of the cluster, ArgoCD will apply the changes from Git
-    syncOptions:
-      - CreateNamespace=true
+  template:
+    metadata:
+      name: 'applications-{{.path}}' # {{name}} comes from the name specified for cluster in secret 
+    spec:
+      project: 'default
+      source:
+        repoURL: https://github.com/RELEX-Solutions/demo-argo.git
+        targetRevision: main
+        path: 'applications/*' # platform-mary-argo-cp should be replaced
+      destination:
+        server: 'https://kubernetes.default.svc'
+        namespace: '{{.path}}'
+      syncPolicy:
+        automated:
+          prune: true  # In case of removal of resources from Git, ArgoCD will apply the changes from the current state of the Git repo
+          selfHeal: true # In case of manual kubectl operations against the state of the cluster, ArgoCD will apply the changes from Git
+        syncOptions:
+        - CreateNamespace=true
+# ---
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: demo-app
+#   namespace: argocd
+# spec:
+#   project: default
+#   source:
+#     repoURL: https://github.com/MaryamTavakkoli/argocd-demo.git
+#     targetRevision: main
+#     path: 'applications/hello-world' 
+#   destination:
+#     server: https://kubernetes.default.svc
+#     namespace: 'default'
+#   syncPolicy:
+#     automated:
+#       prune: true  # In case of removal of resources from Git, ArgoCD will apply the changes from the current state of the Git repo
+#       selfHeal: true # In case of manual kubectl operations against the state of the cluster, ArgoCD will apply the changes from Git
+#     syncOptions:
+#       - CreateNamespace=true
