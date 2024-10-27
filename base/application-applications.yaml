@@ -14,7 +14,7 @@ spec:
       source:
         repoURL: https://github.com/RELEX-Solutions/demo-argo.git
         targetRevision: main
-        path: applications/*
+        path: 'applications/*'
       destination:
         server: https://kubernetes.default.svc
         namespace: '{{.path.path}}'
