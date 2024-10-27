@@ -5,10 +5,7 @@ metadata:
 spec:
   goTemplate: true
   generators:
-  - list:
-      elements:
-      - cluster: demo-control-plane
-        url: https://kubernetes.default.svc
+  - clusters: {}
   template:
     metadata:
       name: 'applications-{{.path}}' 
