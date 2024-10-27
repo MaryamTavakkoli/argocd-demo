@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/MaryamTavakkoli/argocd-demo.git
     targetRevision: main
-    path: 'applications/hello-world' 
+    path: 'applications/guestbook' 
   destination:
     server: https://kubernetes.default.svc
     namespace: 'default'
