@@ -13,13 +13,13 @@ spec:
       - path: applications/*
   template:
     metadata:
-      name: 'demo-app-{{path.path}}' 
+      name: 'demo-app-{{path}}' 
     spec:
       project: default
       source:
         repoURL: https://github.com/RELEX-Solutions/demo-argo.git
         targetRevision: main
-        path: '{{path.path}}'
+        path: '{{path}}'
       destination:
         server: https://kubernetes.default.svc
         namespace: '{{path.basename}}'
