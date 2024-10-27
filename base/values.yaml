@@ -7,4 +7,4 @@ server:
   config:
     # https://argo-cd.readthedocs.io/en/stable/operator-manual/user-management/
     kustomize.buildOptions: --enable-helm
-    timeout.reconcilation: 10s
+    timeout.reconcilation: 20s
