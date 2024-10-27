@@ -4,7 +4,7 @@ metadata:
   name: demo
   namespace: argocd
 spec:
-  #goTemplate: true
+  goTemplate: true
   generators:
   - git:
       repoURL: https://github.com/RELEX-Solutions/demo-argo.git
@@ -22,7 +22,7 @@ spec:
         path: '{{path}}'
       destination:
         server: https://kubernetes.default.svc
-        namespace: '{{path.basename}}'
+        namespace: 'default'
       syncPolicy:
         automated:
           prune: true  # In case of removal of resources from Git, ArgoCD will apply the changes from the current state of the Git repo
